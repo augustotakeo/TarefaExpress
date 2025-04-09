@@ -3,7 +3,7 @@ using TaskManager.Domain.Enums;
 
 namespace TaskManager.Application.DTOs;
 
-public record TaskDTO(int Id, string Title, string? Description, DateTime CreatedAt, DateTime? CompletedAt, EStatus status)
+public record TaskDTO(int Id, string Title, string? Description, DateTime CreatedAt, DateTime? CompletedAt, EStatus Status)
 {
     public static TaskDTO FromTask(TaskItem task)
     {

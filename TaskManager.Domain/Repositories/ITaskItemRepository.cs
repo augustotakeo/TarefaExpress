@@ -2,9 +2,9 @@ using TaskManager.Domain.Entities;
 
 namespace TaskManager.Domain.Repositories;
 
-public interface ITaskRespository
+public interface ITaskItemRepository
 {
-    Task<TaskItem> GetTaskItem(int id);
+    Task<TaskItem?> GetTaskItem(int id);
 
     Task<List<TaskItem>> GetTasksItens();
 

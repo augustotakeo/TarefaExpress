@@ -3,7 +3,7 @@ using TaskManager.Application.Results;
 
 namespace TaskManager.Application.Services;
 
-public interface ITaskService
+public interface ITaskItemService
 {
     Task<Result> GetTaskItem(int id);
     Task<Result> GetTasksItens();
