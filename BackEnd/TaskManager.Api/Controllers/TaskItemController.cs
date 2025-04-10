@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Requests;
 using TaskManager.Application.Services;
+using TaskManager.Domain.Enums;
 
 namespace TaskManager.Api.Controllers;
 
@@ -24,6 +25,15 @@ public class TaskItemController : ControllerBase
         return BadRequest(result.Message);
     }
 
+    [HttpGet("status/{status}")]
+    public async Task<IActionResult> GetTaskItensByStatus([FromRoute] EStatus status)
+    {
+        var result = await _taskItemService.GetTaskItensByStatus(status);
+        if (result.Success)
+            return Ok(result.Content);
+        return BadRequest(result.Message);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTaskItem([FromRoute] int id)
     {
@@ -39,7 +49,7 @@ public class TaskItemController : ControllerBase
         var result = await _taskItemService.CreateTaskItem(request);
         if (result.Success)
             return Ok(result.Content);
-        return BadRequest(result.Message);
+        return BadRequest(result.Content);
     }
 
     [HttpPut]
@@ -48,7 +58,7 @@ public class TaskItemController : ControllerBase
         var result = await _taskItemService.UpdateTaskItem(request);
         if (result.Success)
             return Ok(result.Content);
-        return BadRequest(result.Message);
+        return BadRequest(result.Content);
     }
 
     [HttpDelete("{id}")]

@@ -10,5 +10,15 @@ public abstract class Entity : Notifiable<Notification>
 
     public int Id { get; private set; }
 
+    protected void AddNotificationIfInvalidEnum(Enum @enum, string key, string message)
+    {
+        foreach (var value in @enum.GetType().GetEnumValues())
+        {
+            if (@enum.Equals((Enum)value))
+                return;
+        }
+
+        AddNotification(key, message);
+    }
 
 }

@@ -4,5 +4,5 @@ public enum EStatus
 {
     Pendente = 1,
     EmProgresso = 2,
-    Concluida = 3
+    Concluido = 3
 }

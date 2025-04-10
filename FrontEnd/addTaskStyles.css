@@ -1,0 +1,58 @@
+.add-task-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+.align-modal-center {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    width: 80%;
+    height: 80%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: lightgray;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: 0;
+    font-size: 20px;
+}
+
+.input-element {
+    padding: 5px;
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input-element input {
+    width: 80%;
+}
+
+.input-element textarea {
+    width: 80%;
+    height: 200px;
+}
+
+form button {
+    padding: 5px;
+}

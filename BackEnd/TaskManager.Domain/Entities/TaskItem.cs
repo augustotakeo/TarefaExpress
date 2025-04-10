@@ -12,30 +12,42 @@ public class TaskItem : Entity
     public DateTime? CompletedAt { get; private set; }
     public EStatus Status { get; private set; }
 
-    public TaskItem(string title, string? description, EStatus status, DateTime? completedAt = null)
+    public TaskItem(string title, string? description, EStatus status)
     {
         Title = title;
         Description = description;
         CreatedAt = DateTime.UtcNow;
-        CompletedAt = completedAt;
-        Status = status;
-        CheckProperties();        
+        UpdateStatus(status);
+        CheckProperties();
     }
 
-    public void Update(string title, string? description, EStatus status, DateTime? completedAt = null)
+    public void Update(string title, string? description, EStatus status)
     {
         Title = title;
         Description = description;
-        CompletedAt = completedAt;
+        UpdateStatus(status);
+        CheckProperties();
+    }
+
+    public void UpdateStatus(EStatus status)
+    {
+        if (Status == status)
+            return;
+
         Status = status;
-        CheckProperties();        
+        if (Status == EStatus.Concluido)
+            CompletedAt = DateTime.UtcNow;
+        else
+            CompletedAt = null;
     }
 
     private void CheckProperties()
     {
         AddNotifications(new Contract<Notification>()
-            .IsNotNullOrWhiteSpace(Title, "TaskItem.Title")
-            .IsLowerOrEqualsThan(Title, 100, "TaskItem.Title")
-            .IsGreaterOrEqualsThan(CompletedAt ?? CreatedAt, CreatedAt, "TaskItem.CompletedAt"));
+            .IsNotNullOrWhiteSpace(Title, "TaskItem.Title", "Preencher um título")
+            .IsBetween(Title.Length, 1, 100, "TaskItem.Title", "Título dever entre 1 e 100 caracteres")
+            .IsGreaterOrEqualsThan(CompletedAt ?? CreatedAt, CreatedAt, "TaskItem.CompletedAt", "Data de conclusão inválida"));
+
+        AddNotificationIfInvalidEnum(Status, "TaskItem.Status", "Status inválido");
     }
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="./getTasksScript.js"></script>
+    <script type="module" src="./addTasksScript.js"></script>
+    <link rel="stylesheet" href="./getTaskStyles.css">
+    <link rel="stylesheet" href="./addTaskStyles.css">
+    <title>Gerenciador de Tarefas</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Gerenciador de tarefas</h1>
+    </header>
+
+    <section class="section-tasks-content">
+
+        <div class="buttons-filters">
+            <button id="filter-tasks-pendentes" class="button">Pendentes</button>
+            <button id="filter-tasks-emprogresso" class="button">Em Progresso</button>
+            <button id="filter-tasks-concluidas" class="button">Concluídas</button>
+        </div>
+
+        <button id="add-task-button" class="button">Adicionar Tarefa</button>
+
+        <div id="tasks" class="tasks">
+        </div>
+
+    </section>
+
+    <div id="add-task-modal" class="add-task-modal">
+        <div class="align-modal-center">
+            <form id="add-task-form">
+                <button id="close-modal" type="button" class="close-modal">x</button>
+
+                <div class="input-element">
+                    <label for="input-title"> Título </label>
+                    <input id="input-title" />
+                </div>
+
+                <div class="input-element">
+                    <label for="input-description"> Descrição </label>
+                    <textarea id="input-description"></textarea>
+                </div>
+
+                <div class="input-element">
+                    <label for="input-status"> Status </label>
+                    <select name="status" id="input-status">
+                        <option value="Pendente">Pendente</option>
+                        <option value="EmProgresso">Em Progresso</option>
+                        <option value="Concluido">Concluído</option>
+                    </select>
+                </div>
+
+                <button id="save-task-button" type="submit">Salvar</button>
+
+                <span id="error-message"></span>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

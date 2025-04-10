@@ -1,7 +1,9 @@
 using TaskManager.Application.DTOs;
+using TaskManager.Application.Extensions;
 using TaskManager.Application.Requests;
 using TaskManager.Application.Results;
 using TaskManager.Domain.Entities;
+using TaskManager.Domain.Enums;
 using TaskManager.Domain.Repositories;
 
 namespace TaskManager.Application.Services;
@@ -18,20 +20,30 @@ public class TaskItemService : ITaskItemService
     public async Task<Result> GetTaskItem(int id)
     {
         var taskItem = await _taskRepository.GetTaskItem(id);
-        if(taskItem is null)
+        if (taskItem is null)
             return Result.Fail("Task not found");
         return Result.Ok(taskItem);
     }
 
     public async Task<Result> GetTasksItens()
     {
-        var taskItems = await _taskRepository.GetTasksItens();
-        return Result.Ok(taskItems);
+        var taskItens = await _taskRepository.GetTasksItens();
+
+        return Result.Ok(TaskDTO.FromTasks(taskItens));
+    }
+
+    public async Task<Result> GetTaskItensByStatus(EStatus status)
+    {
+        var tasksItens = await _taskRepository.GetTasksItens(status);
+        return Result.Ok(TaskDTO.FromTasks(tasksItens));
     }
 
     public async Task<Result> CreateTaskItem(CreateTaskRequest request)
     {
-        var taskItem = new TaskItem(request.Title, request.Description, request.Status, request.CompletedAt);
+        var status = request.Status.GetEnumFromString<EStatus>(0);
+        Console.WriteLine(request.Status);
+
+        var taskItem = new TaskItem(request.Title, request.Description, status);
 
         if (taskItem.IsInvalid)
             return Result.Fail(taskItem.NotificationMessages, "Invalid Task");
@@ -48,10 +60,12 @@ public class TaskItemService : ITaskItemService
         if (taskItem is null)
             return Result.Fail("Task not found");
 
+        var status = request.Status.GetEnumFromString<EStatus>(0);
+
+        taskItem.Update(request.Title, request.Description, status);
+
         if (taskItem.IsInvalid)
             return Result.Fail(taskItem.NotificationMessages, "Invalid Task");
-
-        taskItem.Update(request.Title, request.Description, request.Status, request.CompletedAt);
 
         await _taskRepository.UpdateTaskItem(taskItem);
 

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Domain.Entities;
+using TaskManager.Domain.Enums;
 using TaskManager.Domain.Repositories;
 
 namespace TaskManager.Infrastructure.Repositories;
@@ -28,13 +29,25 @@ public class TaskItemRepository : ITaskItemRepository
 
     public async Task<TaskItem?> GetTaskItem(int id)
     {
-        var taskItem = await _taskContext.TaskItens.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var taskItem = await _taskContext.TaskItens
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id);
+
         return taskItem;
     }
 
     public async Task<List<TaskItem>> GetTasksItens()
     {
         var taskItens = await _taskContext.TaskItens.ToListAsync();
+        return taskItens;
+    }
+
+    public async Task<List<TaskItem>> GetTasksItens(EStatus status)
+    {
+        var taskItens = await _taskContext.TaskItens
+            .Where(x => x.Status == status)
+            .ToListAsync();
+            
         return taskItens;
     }
 

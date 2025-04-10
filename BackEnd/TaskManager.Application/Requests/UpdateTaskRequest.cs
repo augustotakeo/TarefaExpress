@@ -7,6 +7,5 @@ public class UpdateTaskRequest
     public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
-    public DateTime CompletedAt { get; set; }
-    public EStatus Status { get; set; }
+    public string Status { get; set; } = null!;
 }
