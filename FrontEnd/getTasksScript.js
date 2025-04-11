@@ -1,15 +1,24 @@
 import { openEditTaskModal } from './addTasksScript.js';
+import { url, getTaskByStatusUrl, deleteTaskUrl } from './urls.js';
+
+
+document.getElementById('filter-tasks-pendentes').addEventListener('click', () => getTasksByStatus(1));
+
+document.getElementById('filter-tasks-emprogresso').addEventListener('click', () => getTasksByStatus(2));
+
+document.getElementById('filter-tasks-concluidas').addEventListener('click', () => getTasksByStatus(3));
+
 
 export function getTasks() {
     document.getElementById('tasks').innerHTML = '';
-    fetch("http://localhost:5212/tasks")
+    fetch(url)
         .then(async response => await response.json())
         .then(tasks => tasks.forEach(addTaskToList))
 }
 
 export function getTasksByStatus(status) {
     document.getElementById('tasks').innerHTML = '';
-    fetch(`http://localhost:5212/tasks/status/${status}`)
+    fetch(getTaskByStatusUrl(status))
         .then(async response => await response.json())
         .then(tasks => tasks.forEach(addTaskToList))
 }
@@ -186,10 +195,11 @@ function createDeleteButton(task) {
 }
 
 function deleteTask(task) {
-    fetch(`http://localhost:5212/tasks/${task.id}`, { method: 'DELETE' })
+    fetch(deleteTaskUrl(task.id), { method: 'DELETE' })
         .then(async response => {
             if (response.ok) {
-                getTasks()
+                var deletedElement = document.getElementById(task.id);
+                document.getElementById('tasks').removeChild(deletedElement);
             }
         })
 }

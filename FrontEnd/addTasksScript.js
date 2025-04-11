@@ -1,4 +1,16 @@
 import { addTaskToList, updateTaskInList, getTasks, getTasksByStatus } from './getTasksScript.js'
+import { url } from './urls.js'
+
+
+document.getElementById('add-task-button').addEventListener('click', openAddTaskModal);
+
+document.getElementById('save-task-button').addEventListener('click', addTask);
+
+document.getElementById('add-task-form').addEventListener('submit', ev => addTask(ev));
+
+document.getElementById('close-modal').addEventListener('click', hideAddTaskModal);
+
+
 let editTask;
 
 export function openEditTaskModal(task) {
@@ -48,7 +60,7 @@ function addTask(event) {
         body.id = editTask.id;
     }
 
-    fetch("http://localhost:5212/tasks", {
+    fetch(url, {
         method: method,
         body: JSON.stringify(body),
         headers: {
@@ -86,17 +98,3 @@ document.addEventListener('DOMContentLoaded', () => {
     hideAddTaskModal();
     getTasks();
 })
-
-document.getElementById('add-task-button').addEventListener('click', openAddTaskModal);
-
-document.getElementById('save-task-button').addEventListener('click', addTask);
-
-document.getElementById('filter-tasks-pendentes').addEventListener('click', () => getTasksByStatus(1));
-
-document.getElementById('filter-tasks-emprogresso').addEventListener('click', () => getTasksByStatus(2));
-
-document.getElementById('filter-tasks-concluidas').addEventListener('click', () => getTasksByStatus(3));
-
-document.getElementById('add-task-form').addEventListener('submit', ev => addTask(ev));
-
-document.getElementById('close-modal').addEventListener('click', hideAddTaskModal);
