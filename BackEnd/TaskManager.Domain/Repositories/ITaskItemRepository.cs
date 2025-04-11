@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using TaskManager.Domain.Entities;
 using TaskManager.Domain.Enums;
 
@@ -9,11 +10,11 @@ public interface ITaskItemRepository
 
     Task<List<TaskItem>> GetTasksItens();
 
-    Task<List<TaskItem>> GetTasksItens(EStatus status);
+    Task<List<TaskItem>> GetTasksItens(Expression<Func<TaskItem, bool>> filter);
 
     Task CreateTaskItem(TaskItem task);
 
     Task UpdateTaskItem(TaskItem task);
 
-    Task DeleteTaskItem(int id);
+    Task<bool> DeleteTaskItem(int id);
 }

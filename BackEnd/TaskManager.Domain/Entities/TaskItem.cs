@@ -29,25 +29,27 @@ public class TaskItem : Entity
         CheckProperties();
     }
 
+    private void CheckProperties()
+    {
+        AddNotifications(new Contract<Notification>()
+            .IsBetween(Title.Length, 1, 100, "TaskItem.Title", "Título dever entre 1 e 100 caracteres")
+            .IsGreaterOrEqualsThan(CompletedAt ?? CreatedAt, CreatedAt, "TaskItem.CompletedAt", "Data de conclusão inválida"));
+
+        AddNotificationIfInvalidEnum(Status, "TaskItem.Status", "Status inválido");
+    }
+
     public void UpdateStatus(EStatus status)
     {
         if (Status == status)
             return;
 
         Status = status;
+        
+        AddNotificationIfInvalidEnum(Status, "TaskItem.Status", "Status inválido");
+
         if (Status == EStatus.Concluido)
             CompletedAt = DateTime.UtcNow;
         else
             CompletedAt = null;
-    }
-
-    private void CheckProperties()
-    {
-        AddNotifications(new Contract<Notification>()
-            .IsNotNullOrWhiteSpace(Title, "TaskItem.Title", "Preencher um título")
-            .IsBetween(Title.Length, 1, 100, "TaskItem.Title", "Título dever entre 1 e 100 caracteres")
-            .IsGreaterOrEqualsThan(CompletedAt ?? CreatedAt, CreatedAt, "TaskItem.CompletedAt", "Data de conclusão inválida"));
-
-        AddNotificationIfInvalidEnum(Status, "TaskItem.Status", "Status inválido");
     }
 }

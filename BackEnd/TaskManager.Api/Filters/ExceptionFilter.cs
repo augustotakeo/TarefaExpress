@@ -9,7 +9,8 @@ public class ExceptionFilter : IExceptionFilter
     {
         context.Result = new ObjectResult(new
         {
-            Message = "Erro no servidor"
+            Message = "Erro no servidor",
+            Error = context.Exception.Message
         })
         {
             StatusCode = 500

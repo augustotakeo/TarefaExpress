@@ -22,7 +22,7 @@ public record TaskDTO(
             task.Status.ToString());
     }
 
-    public static List<TaskDTO> FromTasks(List<TaskItem> tasks)
+    public static List<TaskDTO> FromTasks(IEnumerable<TaskItem> tasks)
     {
         return tasks.Select(FromTask).ToList();
     }
