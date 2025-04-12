@@ -190,7 +190,12 @@ function createDeleteButton(task) {
     const button = document.createElement('button');
     button.classList = ['button'];
     button.onclick = ev => deleteTask(task);
-    button.textContent = 'Excluir';
+
+    const icon = document.createElement('i');
+    icon.classList = ["fa fa-trash"];
+
+    button.appendChild(icon);
+
     return button;
 }
 
@@ -208,6 +213,11 @@ function createEditButton(task) {
     const button = document.createElement('button');
     button.classList = ['button'];
     button.onclick = ev => openEditTaskModal(task);
-    button.textContent = 'Editar';
+    
+    const icon = document.createElement('i');
+    icon.classList = ["fa fa-edit"];
+
+    button.appendChild(icon);
+
     return button;
 }
