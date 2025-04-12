@@ -3,7 +3,7 @@
     top: 0;
     right: 0;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     z-index: 1;
 }
 
@@ -12,17 +12,21 @@
     justify-content: space-around;
     align-items: center;
     height: 100vh;
+    width: 100%;
 }
 
 form {
+    max-width: 600px;
     width: 80%;
     height: 80%;
+    border: 0;
+    border-radius: 20px;
+    background-color: rgb(219, 83, 4);
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
-    background-color: lightgray;
     position: relative;
 }
 
@@ -46,11 +50,33 @@ form {
 
 .input-element input {
     width: 80%;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    height: 22px;
+    font-size: 15px;
+    margin: 7px;
+    background-color: rgb(240, 111, 24);
 }
 
 .input-element textarea {
     width: 80%;
     height: 200px;
+    border: 0;
+    border-radius: 10px;
+    padding: 5px 15px;
+    font-size: 15px;
+    margin: 7px;
+    background-color: rgb(240, 111, 24);
+}
+
+.input-element select {
+    text-align: center;
+    background: rgb(240, 111, 24);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
 }
 
 form button {
