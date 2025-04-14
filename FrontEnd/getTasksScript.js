@@ -53,6 +53,8 @@ export function updateTaskInList(task) {
     fillCreationDateContent(creationDate, task);
     const completionDate = document.getElementById(getTaskCompletionDateElementId(task));
     fillCompletionDateContent(completionDate, task);
+    const editButton = document.getElementById(getEditButtonId(task));
+    editButton.onclick = ev => openEditTaskModal(task);
 }
 
 function appendTasksElements(element, task) {
@@ -211,13 +213,18 @@ function deleteTask(task) {
 
 function createEditButton(task) {
     const button = document.createElement('button');
+    button.id = getEditButtonId(task);
     button.classList = ['button'];
     button.onclick = ev => openEditTaskModal(task);
-    
+
     const icon = document.createElement('i');
     icon.classList = ["fa fa-edit"];
 
     button.appendChild(icon);
 
     return button;
+}
+
+function getEditButtonId(task) {
+    return `task-edit-button-${task.id}`;
 }
